@@ -65,7 +65,6 @@ step("Select Organization", async function() {
 
 step("Navigate to Recovery", async () => {
     await click("Recovery");
-    await waitFor( "Manage Backups" );
 });
 
 step("<tab> Tab is there", async (tab) => {

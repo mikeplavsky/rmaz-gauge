@@ -1,11 +1,9 @@
 # On Demand Recovery 
 
-* Open On Demand
-* Sign In With Azure  
-* Select Organization 
-* Navigate to Recovery
-
 ## Check All The Tabs  
+
+* Open On Demand and Login
+* Navigate to Recovery
 
 * "Backups" Tab is there
 * "Unpacked Objects" Tab is there
