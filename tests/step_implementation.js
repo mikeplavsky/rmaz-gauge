@@ -14,6 +14,7 @@ const {
     highlight,
     waitFor,
     click,
+    currentURL,
     $} = require('taiko');
 
 const assert = require("assert");
@@ -31,10 +32,21 @@ afterSuite(async () => {
 });
 
 step("Open On Demand", async () => {
+
+    if (alreadyOnRecovery()) {return;}
     await goto("https://quest-on-demand.com/");
+
 });
 
+async function alreadyOnRecovery() {
+    let url = await currentURL();
+    return  url.search(
+        "https://1quest-on-demand.com/backupandrecovery") == 0;
+}
+
 step("Sign In With Azure", async () => {
+
+    if (alreadyOnRecovery()) {return;}
 
     let user = process.env.ODR_USER
     let pwd = process.env.ODR_PWD
@@ -57,6 +69,8 @@ step("Sign In With Azure", async () => {
 
 step("Select Organization", async function() {
 
+    if (alreadyOnRecovery()) {return;}
+
     let org = "US Org";
     await waitFor(org, 120000 );
 
@@ -66,7 +80,10 @@ step("Select Organization", async function() {
 });
 
 step("Navigate to Recovery", async () => {
+
+    if (alreadyOnRecovery()) {return;}
     await click("Recovery");
+
 });
 
 step("Reload Page", async () => {
@@ -75,4 +92,8 @@ step("Reload Page", async () => {
 
 step("<tab> Tab is there", async (tab) => {
     await click(tab);
+});
+
+step("Get URL", async () => {
+    assert.ok(await alreadyOnRecovery());
 });
