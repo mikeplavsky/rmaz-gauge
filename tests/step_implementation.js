@@ -10,6 +10,8 @@ const {
     focus, 
     textBox, 
     toRightOf,
+    reload,
+    highlight,
     waitFor,
     click,
     $} = require('taiko');
@@ -21,11 +23,11 @@ const host = process.env.TAIKO_HOST;
 const port = process.env.TAIKO_PORT;
 
 beforeSuite(async () => {
-    await openBrowser({headless: headless,host,port})
+    await openBrowser({headless:headless,host,port})
 });
 
 afterSuite(async () => {
-    //await closeBrowser();
+   //await closeBrowser();
 });
 
 step("Open On Demand", async () => {
@@ -65,6 +67,10 @@ step("Select Organization", async function() {
 
 step("Navigate to Recovery", async () => {
     await click("Recovery");
+});
+
+step("Reload Page", async () => {
+    reload();
 });
 
 step("<tab> Tab is there", async (tab) => {
