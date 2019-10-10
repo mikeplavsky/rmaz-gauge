@@ -10,5 +10,5 @@ ODR_PWD=$(
 export ODR_USER
 export ODR_PWD
 
-./node_modules/.bin/gauge run specs/
+./node_modules/.bin/gauge run specs/$2
 

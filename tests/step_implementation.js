@@ -5,17 +5,15 @@ const {
     write, 
     closeBrowser,
     goto, 
-    press, 
-    text, 
-    focus, 
-    textBox, 
-    toRightOf,
     reload,
-    highlight,
     waitFor,
     click,
     currentURL,
+    evaluate,
     $} = require('taiko');
+
+/*const getCriTargets = require(
+    '../node_modules/taiko/lib/targetHandler.js');*/
 
 const assert = require("assert");
 
@@ -33,7 +31,9 @@ afterSuite(async () => {
 
 step("Open On Demand", async () => {
 
-    if (await alreadyOnRecovery() || await onSelectOrg() ) {
+    if (await onRecovery() || 
+        await onSelectOrg() || 
+        await onOnDemand()) {
         return;
     }
 
@@ -41,13 +41,19 @@ step("Open On Demand", async () => {
 
 });
 
+async function onOnDemand() {
+    let url = await currentURL();
+    return url.search(
+        "https://quest-on-demand.com/#/mydashboard") == 0;
+}
+
 async function onSelectOrg() {
     let url = await currentURL();
     return  url.search(
         "https://quest-on-demand.com/#/selectOrganization") == 0;
 }
 
-async function alreadyOnRecovery() {
+async function onRecovery() {
     let url = await currentURL();
     return  url.search(
         "https://quest-on-demand.com/backupandrecovery") == 0;
@@ -55,7 +61,9 @@ async function alreadyOnRecovery() {
 
 step("Sign In With Azure", async () => {
 
-    if (await alreadyOnRecovery() || await onSelectOrg() ) {
+    if (await onRecovery() || 
+        await onSelectOrg() || 
+        await onOnDemand()) {
         return;
     }
 
@@ -80,7 +88,8 @@ step("Sign In With Azure", async () => {
 
 step("Select Organization", async function() {
 
-    if (await alreadyOnRecovery()) {return;}
+    if (await onRecovery() || 
+        await onOnDemand()) {return;}
 
     let org = "US Org";
     await waitFor(org, 120000 );
@@ -92,7 +101,7 @@ step("Select Organization", async function() {
 
 step("Navigate to Recovery", async () => {
 
-    if (await alreadyOnRecovery()) {return;}
+    if (await onRecovery()) {return;}
     await click("Recovery");
 
 });
@@ -105,6 +114,11 @@ step("<tab> Tab is there", async (tab) => {
     await click(tab);
 });
 
+step("Do it", async () => {
+    await evaluate(() => {
+    });
+});
+
 step("Get URL", async () => {
-    assert.ok(await onSelectOrg());
+    assert.ok(await onOnDemand());
 });
